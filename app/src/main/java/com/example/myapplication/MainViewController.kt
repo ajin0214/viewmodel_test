@@ -14,9 +14,9 @@ class MainViewController(
     private val viewLifecycleObserver: LifecycleOwner
 ) {
 
-    val tvClickButton: TextView by lazy { rootView.findViewById(R.id.tv_click_button) }
-    val mainViewModel: MainViewModel by lazy { ViewModelProvider(viewModelStoreOwner).get(MainViewModel::class.java) }
-
+    private val tvClickButton: TextView by lazy { rootView.findViewById(R.id.tv_click_button) }
+    private val tvGoodbye: TextView by lazy { rootView.findViewById(R.id.tv_goodbye) }
+    private val mainViewModel: MainViewModel by lazy { ViewModelProvider(viewModelStoreOwner)[MainViewModel::class.java] }
 
     fun init() {
         initObservers()
@@ -30,7 +30,12 @@ class MainViewController(
     }
 
     private fun initObservers() {
-        mainViewModel.isHelloWorldVisible.observe(viewLifecycleObserver) { if (it != null) setHelloWorldVisibility(isVisible = it) }
+        mainViewModel.isHelloWorldVisible.observe(viewLifecycleObserver) { isVisible ->
+            setHelloWorldVisibility(isVisible)
+        }
+        mainViewModel.searchDailyBoxOfficeList.observe(viewLifecycleObserver) {
+            setGoodByeText(text = it)
+        }
     }
 
     private fun onClickTvClickButton() {
@@ -39,5 +44,9 @@ class MainViewController(
 
     private fun setHelloWorldVisibility(isVisible: Boolean) {
         tvClickButton.visibility = if (isVisible) VISIBLE else INVISIBLE
+    }
+
+    private fun setGoodByeText(text: String) {
+        tvGoodbye.text = text
     }
 }
