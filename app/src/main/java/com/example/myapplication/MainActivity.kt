@@ -16,6 +16,6 @@ class MainActivity : AppCompatActivity() {
             viewLifecycleObserver = this
         ).init()
 
-        ViewModelProvider(this).get(MainViewModel::class.java)
+        ViewModelProvider(this)[MainViewModel::class.java]
     }
 }
