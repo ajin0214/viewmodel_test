@@ -22,9 +22,8 @@ class MainViewModel : ViewModel() {
                 repository?.getDailyBoxOffice()?.let {
                     _searchDailyBoxOfficeList.value = it.getDailyBoxOfficeResults() ?: emptyList()
                 }
-
-            } catch (e: Exception) {
-                // 에러 발생 시 처리
+            }
+            catch (e: Exception) {
             }
         }
     }

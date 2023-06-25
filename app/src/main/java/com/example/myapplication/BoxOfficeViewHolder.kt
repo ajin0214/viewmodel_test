@@ -13,6 +13,5 @@ class BoxOfficeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         textRank.text = boxOfficeDetailResult.rank
         textMovieTitle.text = boxOfficeDetailResult.movieNm
         textOpenDate.text = boxOfficeDetailResult.openDt
-        // 다른 필드들도 필요한 경우 여기에 추가하세요
     }
 }
