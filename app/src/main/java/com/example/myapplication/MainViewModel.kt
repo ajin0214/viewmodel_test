@@ -1,19 +1,15 @@
 package com.example.myapplication
 
-
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-
 class MainViewModel : ViewModel() {
-
     private var repository: Repository? = null
     private val _searchDailyBoxOfficeList = MutableLiveData<List<BoxOfficeDetailResult>>()
     val searchDailyBoxOfficeList: LiveData<List<BoxOfficeDetailResult>> = _searchDailyBoxOfficeList
-
 
     init {
         repository = Repository()
