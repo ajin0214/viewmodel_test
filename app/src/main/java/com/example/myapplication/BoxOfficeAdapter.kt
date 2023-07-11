@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.DiffUtil
-
+import com.example.myapplication.databinding.ItemBoxOfficeBinding
 
 class BoxOfficeAdapter :
         RecyclerView.Adapter<BoxOfficeViewHolder>() {
@@ -12,9 +12,9 @@ class BoxOfficeAdapter :
     private var boxOfficeList: List<BoxOfficeDetailResult>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoxOfficeViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_box_office, parent, false)
-        return BoxOfficeViewHolder(itemView)
+        val inflater = LayoutInflater.from(parent.context)
+        val itemBoxOfficeBinding = ItemBoxOfficeBinding.inflate(inflater, parent, false)
+        return BoxOfficeViewHolder(itemBoxOfficeBinding)
     }
 
     override fun onBindViewHolder(holder: BoxOfficeViewHolder, position: Int) {
@@ -50,7 +50,7 @@ class BoxOfficeAdapter :
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             val oldItem = oldList?.get(oldItemPosition)
             val newItem = newList[newItemPosition]
-            return oldItem?.movieNm == newItem.movieNm // 고유한 아이템 식별자를 기준으로 비교
+            return oldItem?.movieCd == newItem.movieCd // 고유한 아이템 식별자를 기준으로 비교
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

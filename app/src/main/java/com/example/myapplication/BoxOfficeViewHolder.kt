@@ -1,17 +1,13 @@
 package com.example.myapplication
 
-import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.databinding.ItemBoxOfficeBinding
 
-class BoxOfficeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private val textRank: TextView = itemView.findViewById(R.id.text_rank)
-    private val textMovieTitle: TextView = itemView.findViewById(R.id.text_movie_title)
-    private val textOpenDate: TextView = itemView.findViewById(R.id.text_open_date)
-
+class BoxOfficeViewHolder(private val itemBoxOfficeBinding: ItemBoxOfficeBinding) : RecyclerView.ViewHolder(itemBoxOfficeBinding.root)
+{
     fun bind(boxOfficeDetailResult: BoxOfficeDetailResult) {
-        textRank.text = boxOfficeDetailResult.rank
-        textMovieTitle.text = boxOfficeDetailResult.movieNm
-        textOpenDate.text = boxOfficeDetailResult.openDt
+        itemBoxOfficeBinding.textRank.text = boxOfficeDetailResult.rank
+        itemBoxOfficeBinding.textMovieTitle.text = boxOfficeDetailResult.movieNm
+        itemBoxOfficeBinding.textOpenDate.text = boxOfficeDetailResult.openDt
     }
 }

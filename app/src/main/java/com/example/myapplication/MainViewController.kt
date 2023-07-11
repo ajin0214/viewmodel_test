@@ -1,18 +1,17 @@
 package com.example.myapplication
 
-import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
-import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.databinding.ActivityMainBinding
+
 
 class MainViewController(
-    rootView: View,
-    viewModelStoreOwner: ViewModelStoreOwner,
+    private val activityMainBinding: ActivityMainBinding,
+    private val viewModelStoreOwner: ViewModelStoreOwner,
     private val viewLifecycleObserver: LifecycleOwner
 ) {
     private val mainViewModel: MainViewModel by lazy { ViewModelProvider(viewModelStoreOwner)[MainViewModel::class.java] }
-    private val boxOfficeList: RecyclerView by lazy { rootView.findViewById(R.id.rv_boxoffice_list) }
     private val adapter: BoxOfficeAdapter by lazy { BoxOfficeAdapter() }
 
     fun init() {
@@ -21,7 +20,7 @@ class MainViewController(
     }
 
     private fun initView() {
-        boxOfficeList.adapter = adapter
+        activityMainBinding.rvBoxofficeList.adapter = adapter
     }
 
     private fun initObservers() {
