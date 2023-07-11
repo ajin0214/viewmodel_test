@@ -25,9 +25,14 @@ class MainViewController(
     }
 
     private fun initObservers() {
-        mainViewModel.searchDailyBoxOfficeList.observe(viewLifecycleObserver) {
-            adapter.setBoxOfficeList(it)
-            adapter.notifyDataSetChanged()
+        mainViewModel.searchDailyBoxOfficeList.observe(viewLifecycleObserver) { newBoxOfficeList ->
+            adapter.updateList(newBoxOfficeList)
         }
     }
+/*
+    private fun setInitialBoxOfficeList() {
+        val initialBoxOfficeList = // 초기 목록 데이터
+                adapter.setBoxOfficeList(initialBoxOfficeList)
+    }
+ */
 }
