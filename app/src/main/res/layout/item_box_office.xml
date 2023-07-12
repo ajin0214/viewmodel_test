@@ -5,6 +5,12 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <ImageView
+        android:id="@+id/image_movie_poster"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop" />
+
     <TextView
         android:id="@+id/text_rank"
         android:layout_width="wrap_content"
