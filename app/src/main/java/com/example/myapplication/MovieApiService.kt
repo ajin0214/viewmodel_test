@@ -8,5 +8,5 @@ interface MovieApiService {
     suspend fun getDailyBoxOfficeList(
         @Query("key") apiKey: String,
         @Query("targetDt") targetDate: String
-    ): DailyBoxOfficeResult?
+    ): DailyBoxOfficeListResult?
 }

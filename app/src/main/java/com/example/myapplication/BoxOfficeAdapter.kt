@@ -4,10 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class BoxOfficeAdapter :
-    RecyclerView.Adapter<BoxOfficeViewHolder>() {
+class BoxOfficeAdapter : RecyclerView.Adapter<BoxOfficeViewHolder>() {
 
-    private var boxOfficeList: List<BoxOfficeDetailResult>? = null
+    private var dailyBoxOfficeList: List<DailyBoxOfficeResult>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoxOfficeViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -16,16 +15,16 @@ class BoxOfficeAdapter :
     }
 
     override fun onBindViewHolder(holder: BoxOfficeViewHolder, position: Int) {
-        boxOfficeList?.let {
+        dailyBoxOfficeList?.let {
             holder.bind(it[position])
         }
     }
 
     override fun getItemCount(): Int {
-        return boxOfficeList?.size ?: 0
+        return dailyBoxOfficeList?.size ?: 0
     }
 
-    fun setBoxOfficeList(boxOfficeList: List<BoxOfficeDetailResult>) {
-        this.boxOfficeList = boxOfficeList
+    fun setDailyBoxOfficeList(dailyBoxOfficeList: List<DailyBoxOfficeResult>) {
+        this.dailyBoxOfficeList = dailyBoxOfficeList
     }
 }
