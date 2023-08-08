@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.DiffUtil
 
 
+
 class BoxOfficeAdapter :
         RecyclerView.Adapter<BoxOfficeViewHolder>() {
 
-    private var boxOfficeList: List<BoxOfficeDetailResult>? = null
+
+    private var dailyBoxOfficeList: List<DailyBoxOfficeResult>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoxOfficeViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -18,14 +20,15 @@ class BoxOfficeAdapter :
     }
 
     override fun onBindViewHolder(holder: BoxOfficeViewHolder, position: Int) {
-        boxOfficeList?.let {
+        dailyBoxOfficeList?.let {
             holder.bind(it[position])
         }
     }
 
     override fun getItemCount(): Int {
-        return boxOfficeList?.size ?: 0
+        return dailyBoxOfficeList?.size ?: 0
     }
+
 
     fun setBoxOfficeList(newBoxOfficeList: List<BoxOfficeDetailResult>) {
         val diffCallback = MyDiffCallback(boxOfficeList, newBoxOfficeList)
@@ -66,5 +69,6 @@ class BoxOfficeAdapter :
 
         boxOfficeList = newBoxOfficeList
         diffResult.dispatchUpdatesTo(this)
+
     }
 }

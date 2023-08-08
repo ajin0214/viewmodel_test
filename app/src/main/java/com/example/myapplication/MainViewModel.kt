@@ -7,23 +7,23 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
-    private var repository: Repository? = null
-    private val _searchDailyBoxOfficeList = MutableLiveData<List<BoxOfficeDetailResult>>()
-    val searchDailyBoxOfficeList: LiveData<List<BoxOfficeDetailResult>> = _searchDailyBoxOfficeList
+    private val repository: Repository by lazy { Repository() }
+
+    private val _dailyBoxOfficeList = MutableLiveData<List<DailyBoxOfficeResult>>()
+    val dailyBoxOfficeList: LiveData<List<DailyBoxOfficeResult>> = _dailyBoxOfficeList
 
     init {
-        repository = Repository()
         requestSearchDailyBoxOfficeList()
     }
 
     private fun requestSearchDailyBoxOfficeList() {
         viewModelScope.launch {
             try {
-                repository?.getDailyBoxOffice()?.let {
-                    _searchDailyBoxOfficeList.value = it.getDailyBoxOfficeResults() ?: emptyList()
+                repository.getDailyBoxOfficeList()?.let {
+                    _dailyBoxOfficeList.value = it.getDailyBoxOfficeList() ?: emptyList()
                 }
-            }
-            catch (e: Exception) {
+            } catch (e: Exception) {
+                // todo-만갑: 에러 처리
             }
         }
     }

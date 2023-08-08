@@ -9,9 +9,9 @@ class BoxOfficeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val textMovieTitle: TextView = itemView.findViewById(R.id.text_movie_title)
     private val textOpenDate: TextView = itemView.findViewById(R.id.text_open_date)
 
-    fun bind(boxOfficeDetailResult: BoxOfficeDetailResult) {
-        textRank.text = boxOfficeDetailResult.rank
-        textMovieTitle.text = boxOfficeDetailResult.movieNm
-        textOpenDate.text = boxOfficeDetailResult.openDt
+    fun bind(dailyBoxOfficeResult: DailyBoxOfficeResult) {
+        textRank.text = dailyBoxOfficeResult.rank
+        textMovieTitle.text = dailyBoxOfficeResult.movieNm
+        textOpenDate.text = dailyBoxOfficeResult.openDt
     }
 }
