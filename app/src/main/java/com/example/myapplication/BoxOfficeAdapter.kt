@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.DiffUtil
 
 
-class BoxOfficeAdapter :
-        RecyclerView.Adapter<BoxOfficeViewHolder>() {
 
-    private var boxOfficeList: List<BoxOfficeDetailResult>? = null
+class BoxOfficeAdapter : RecyclerView.Adapter<BoxOfficeViewHolder>() {
+
+    private var dailyBoxOfficeList: List<DailyBoxOfficeResult>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoxOfficeViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -18,25 +18,18 @@ class BoxOfficeAdapter :
     }
 
     override fun onBindViewHolder(holder: BoxOfficeViewHolder, position: Int) {
-        boxOfficeList?.let {
+        dailyBoxOfficeList?.let {
             holder.bind(it[position])
         }
     }
 
     override fun getItemCount(): Int {
-        return boxOfficeList?.size ?: 0
-    }
-
-    fun setBoxOfficeList(newBoxOfficeList: List<BoxOfficeDetailResult>) {
-        val diffCallback = MyDiffCallback(boxOfficeList, newBoxOfficeList)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-        boxOfficeList = newBoxOfficeList
-        diffResult.dispatchUpdatesTo(this)
+        return dailyBoxOfficeList?.size ?: 0
     }
 
     private class MyDiffCallback(
-            private val oldList: List<BoxOfficeDetailResult>?,
-            private val newList: List<BoxOfficeDetailResult>
+            private val oldList: List<DailyBoxOfficeResult>?,
+            private val newList: List<DailyBoxOfficeResult>
     ) : DiffUtil.Callback() {
 
         override fun getOldListSize(): Int {
@@ -56,15 +49,17 @@ class BoxOfficeAdapter :
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             val oldItem = oldList?.get(oldItemPosition)
             val newItem = newList[newItemPosition]
-            return oldItem == newItem // 아이템의 내용이 동일한지 비교
+            return oldItem == newItem
         }
     }
 
-    fun updateList(newBoxOfficeList: List<BoxOfficeDetailResult>) {
-        val diffCallback = MyDiffCallback(boxOfficeList, newBoxOfficeList)
+    fun updateList(dailyBoxOfficeList: List<DailyBoxOfficeResult>) {
+        val diffCallback = MyDiffCallback(this.dailyBoxOfficeList, dailyBoxOfficeList)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
-        boxOfficeList = newBoxOfficeList
+        this.dailyBoxOfficeList = dailyBoxOfficeList
         diffResult.dispatchUpdatesTo(this)
+
+
     }
 }
