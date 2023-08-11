@@ -4,17 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.DiffUtil
+import com.example.myapplication.databinding.ItemBoxOfficeBinding
 
 
-
-class BoxOfficeAdapter : RecyclerView.Adapter<BoxOfficeViewHolder>() {
+class BoxOfficeAdapter :
+        RecyclerView.Adapter<BoxOfficeViewHolder>() {
 
     private var dailyBoxOfficeList: List<DailyBoxOfficeResult>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoxOfficeViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_box_office, parent, false)
-        return BoxOfficeViewHolder(itemView)
+        val inflater = LayoutInflater.from(parent.context)
+        val itemBoxOfficeBinding = ItemBoxOfficeBinding.inflate(inflater, parent, false)
+        return BoxOfficeViewHolder(itemBoxOfficeBinding)
     }
 
     override fun onBindViewHolder(holder: BoxOfficeViewHolder, position: Int) {
