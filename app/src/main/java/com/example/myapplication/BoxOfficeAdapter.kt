@@ -44,7 +44,7 @@ class BoxOfficeAdapter :
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             val oldItem = oldList?.get(oldItemPosition)
             val newItem = newList[newItemPosition]
-            return oldItem?.movieNm == newItem.movieNm // 고유한 아이템 식별자를 기준으로 비교
+            return oldItem?.movieCd == newItem.movieCd
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
