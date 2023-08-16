@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import java.util.Calendar
+import java.util.Date
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -15,16 +15,13 @@ class MainViewModel : ViewModel() {
     private val _dailyBoxOfficeList = MutableLiveData<List<DailyBoxOfficeResult>>()
     val dailyBoxOfficeList: LiveData<List<DailyBoxOfficeResult>> = _dailyBoxOfficeList
 
-    private var calendar: Calendar = Calendar.getInstance()
-    private var yesterday = calendar.add(Calendar.DAY_OF_YEAR, -1)
-    //private var yesterday변수선언 안해주면 왜오류나는지절대모름
-    private var targetDate: String = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(calendar.time)
-
     init {
         requestSearchDailyBoxOfficeList()
     }
 
     private fun requestSearchDailyBoxOfficeList() {
+        val targetDate = getTargetDate()
+
         viewModelScope.launch {
             try {
                 repository.getDailyBoxOfficeList(targetDate = targetDate).let {
@@ -34,5 +31,11 @@ class MainViewModel : ViewModel() {
                 // todo-만갑: 에러 처리
             }
         }
+    }
+
+    private fun getTargetDate(): String {
+        val oneDayInMillis: Long = 24 * 60 * 60 * 1000 // 하루는 86400000 밀리초입니다
+        val yesterdayInMillis: Long = System.currentTimeMillis() - oneDayInMillis
+        return SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date(yesterdayInMillis))
     }
 }
