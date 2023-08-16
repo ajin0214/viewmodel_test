@@ -24,7 +24,7 @@ class MainViewController(
 
     private fun initObservers() {
         mainViewModel.dailyBoxOfficeList.observe(viewLifecycleObserver) { dailyBoxOfficeList ->
-            adapter.updateList(dailyBoxOfficeList)
+            adapter.submitList(dailyBoxOfficeList)
         }
     }
 }
