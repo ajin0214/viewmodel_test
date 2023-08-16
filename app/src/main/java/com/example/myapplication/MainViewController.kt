@@ -7,7 +7,7 @@ import com.example.myapplication.databinding.ActivityMainBinding
 
 class MainViewController(
     private val activityMainBinding: ActivityMainBinding,
-    private val viewModelStoreOwner: ViewModelStoreOwner,
+    viewModelStoreOwner: ViewModelStoreOwner,
     private val viewLifecycleObserver: LifecycleOwner
 ) {
     private val mainViewModel: MainViewModel by lazy { ViewModelProvider(viewModelStoreOwner)[MainViewModel::class.java] }

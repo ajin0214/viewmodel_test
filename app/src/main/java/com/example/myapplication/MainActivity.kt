@@ -14,9 +14,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(activityMainBinding.root)
 
         MainViewController(
-            activityMainBinding,
-            this,
-            this
+            activityMainBinding = activityMainBinding,
+            viewModelStoreOwner = this,
+            viewLifecycleObserver = this
         ).init()
 
         ViewModelProvider(this)[MainViewModel::class.java]

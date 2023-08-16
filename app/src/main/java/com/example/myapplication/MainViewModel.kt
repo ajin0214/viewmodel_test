@@ -27,8 +27,8 @@ class MainViewModel : ViewModel() {
     private fun requestSearchDailyBoxOfficeList() {
         viewModelScope.launch {
             try {
-                repository.getDailyBoxOfficeList(targetDate)?.let {
-                    _dailyBoxOfficeList.value = it.getDailyBoxOfficeList() ?: emptyList()
+                repository.getDailyBoxOfficeList(targetDate = targetDate).let {
+                    _dailyBoxOfficeList.value = it.getDailyBoxOfficeList()?: emptyList()
                 }
             } catch (e: Exception) {
                 // todo-만갑: 에러 처리
