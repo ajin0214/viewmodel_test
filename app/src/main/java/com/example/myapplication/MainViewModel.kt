@@ -24,9 +24,9 @@ class MainViewModel : ViewModel() {
 
         viewModelScope.launch {
             try {
-                repository.getDailyBoxOfficeList(targetDate = targetDate).let {
-                    _dailyBoxOfficeList.value = it.getDailyBoxOfficeList()?: emptyList()
-                }
+                val dailyBoxOfficeListResult = repository.getDailyBoxOfficeList(targetDate = targetDate)
+                _dailyBoxOfficeList.value = dailyBoxOfficeListResult.getDailyBoxOfficeList() ?: emptyList()
+
             } catch (e: Exception) {
                 // todo-만갑: 에러 처리
             }
@@ -34,7 +34,7 @@ class MainViewModel : ViewModel() {
     }
 
     private fun getTargetDate(): String {
-        val oneDayInMillis: Long = 24 * 60 * 60 * 1000 // 하루는 86400000 밀리초입니다
+        val oneDayInMillis: Long = 24 * 60 * 60 * 1000
         val yesterdayInMillis: Long = System.currentTimeMillis() - oneDayInMillis
         return SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date(yesterdayInMillis))
     }
