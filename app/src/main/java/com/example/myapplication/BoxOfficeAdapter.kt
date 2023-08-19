@@ -7,15 +7,17 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.myapplication.databinding.ItemBoxOfficeBinding
 
 class BoxOfficeAdapter :
-    ListAdapter<DailyBoxOfficeResult, BoxOfficeViewHolder>(DailyBoxOfficeDiffCallback()) {
+    ListAdapter<DailyBoxOfficeResult, BoxOfficeViewHolder>(DailyBoxOfficeDiffCallback) {
 
-    class DailyBoxOfficeDiffCallback : DiffUtil.ItemCallback<DailyBoxOfficeResult>() {
-        override fun areItemsTheSame(oldItem: DailyBoxOfficeResult, newItem: DailyBoxOfficeResult): Boolean {
-            return oldItem.movieCd == newItem.movieCd
-        }
+    companion object {
+        val DailyBoxOfficeDiffCallback = object : DiffUtil.ItemCallback<DailyBoxOfficeResult>() {
+            override fun areItemsTheSame(oldItem: DailyBoxOfficeResult, newItem: DailyBoxOfficeResult): Boolean {
+                return oldItem.movieCd == newItem.movieCd
+            }
 
-        override fun areContentsTheSame(oldItem: DailyBoxOfficeResult, newItem: DailyBoxOfficeResult): Boolean {
-            return oldItem == newItem
+            override fun areContentsTheSame(oldItem: DailyBoxOfficeResult, newItem: DailyBoxOfficeResult): Boolean {
+                return oldItem == newItem
+            }
         }
     }
 
