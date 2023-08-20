@@ -2,29 +2,32 @@ package com.example.myapplication
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import com.example.myapplication.databinding.ItemBoxOfficeBinding
 
-class BoxOfficeAdapter : RecyclerView.Adapter<BoxOfficeViewHolder>() {
+class BoxOfficeAdapter :
+    ListAdapter<DailyBoxOfficeResult, BoxOfficeViewHolder>(DailyBoxOfficeDiffCallback) {
 
-    private var dailyBoxOfficeList: List<DailyBoxOfficeResult>? = null
+    companion object {
+        val DailyBoxOfficeDiffCallback = object : DiffUtil.ItemCallback<DailyBoxOfficeResult>() {
+            override fun areItemsTheSame(oldItem: DailyBoxOfficeResult, newItem: DailyBoxOfficeResult): Boolean {
+                return oldItem.movieCd == newItem.movieCd
+            }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoxOfficeViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_box_office, parent, false)
-        return BoxOfficeViewHolder(itemView)
-    }
-
-    override fun onBindViewHolder(holder: BoxOfficeViewHolder, position: Int) {
-        dailyBoxOfficeList?.let {
-            holder.bind(it[position])
+            override fun areContentsTheSame(oldItem: DailyBoxOfficeResult, newItem: DailyBoxOfficeResult): Boolean {
+                return oldItem == newItem
+            }
         }
     }
 
-    override fun getItemCount(): Int {
-        return dailyBoxOfficeList?.size ?: 0
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoxOfficeViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val itemBoxOfficeBinding = ItemBoxOfficeBinding.inflate(inflater, parent, false)
+        return BoxOfficeViewHolder(itemBoxOfficeBinding)
     }
 
-    fun setDailyBoxOfficeList(dailyBoxOfficeList: List<DailyBoxOfficeResult>) {
-        this.dailyBoxOfficeList = dailyBoxOfficeList
+    override fun onBindViewHolder(holder: BoxOfficeViewHolder, position: Int) {
+        holder.bind(getItem(position))
     }
 }
