@@ -30,8 +30,13 @@ class MainViewModel : ViewModel() {
                 val dailyBoxOfficeListWithPoster = dailyBoxOfficeList.map {
                     val year = it.openDt.substring(0,4)
                     val tmdbResponse = repository.searchMovie(it.movieNm, year)
-                    val posterPath = tmdbResponse.results?.firstOrNull()?.poster_path
-                    it.copy(posterPath = posterPath)
+                    val firstResult = tmdbResponse.results?.firstOrNull()
+                    it.copy(
+                        posterPath = firstResult?.poster_path,
+                        voteAverage = firstResult?.vote_average,
+                        backdropPath = firstResult?.backdrop_path,
+                        overview = firstResult?.overview
+                    )
                 }
                 _dailyBoxOfficeList.value = dailyBoxOfficeListWithPoster
 

@@ -1,5 +1,8 @@
 package com.example.myapplication
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 data class DailyBoxOfficeListResult(
     val boxOfficeResult: BoxOfficeResult?
 ) {
@@ -14,6 +17,7 @@ data class BoxOfficeResult(
     val dailyBoxOfficeList: List<DailyBoxOfficeResult>?
 )
 
+@Parcelize
 data class DailyBoxOfficeResult(
     val rnum: String?,
     val rank: String?,
@@ -31,5 +35,8 @@ data class DailyBoxOfficeResult(
     val audiAcc: String?,
     val scrnCnt: String?,
     val showCnt: String?,
-    var posterPath: String? = null
-)
+    var posterPath: String? = null,
+    var voteAverage: Double? = null,
+    var backdropPath: String? = null,
+    var overview: String? = null
+) : Parcelable
