@@ -25,7 +25,15 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val dailyBoxOfficeListResult = repository.getDailyBoxOfficeList(targetDate = targetDate)
-                _dailyBoxOfficeList.value = dailyBoxOfficeListResult.getDailyBoxOfficeList() ?: emptyList()
+                val dailyBoxOfficeList = dailyBoxOfficeListResult.getDailyBoxOfficeList() ?: emptyList()
+
+                val dailyBoxOfficeListWithPoster = dailyBoxOfficeList.map {
+                    val year = it.openDt.substring(0,4)
+                    val tmdbResponse = repository.searchMovie(it.movieNm, year)
+                    val posterPath = tmdbResponse.results?.firstOrNull()?.poster_path
+                    it.copy(posterPath = posterPath)
+                }
+                _dailyBoxOfficeList.value = dailyBoxOfficeListWithPoster
 
             } catch (e: Exception) {
                 // todo-만갑: 에러 처리

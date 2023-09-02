@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.myapplication.databinding.ItemBoxOfficeBinding
 
+
 class BoxOfficeAdapter :
     ListAdapter<DailyBoxOfficeResult, BoxOfficeViewHolder>(DailyBoxOfficeDiffCallback) {
 
