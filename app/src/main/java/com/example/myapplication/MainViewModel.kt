@@ -28,7 +28,7 @@ class MainViewModel : ViewModel() {
                 val dailyBoxOfficeList = dailyBoxOfficeListResult.getDailyBoxOfficeList() ?: emptyList()
 
                 val dailyBoxOfficeListWithPoster = dailyBoxOfficeList.map {
-                    val year = it.openDt.substring(0,4)
+                    val year = it.openDt.substring(0, 4)
                     val tmdbResponse = repository.searchMovie(it.movieNm, year)
                     val firstResult = tmdbResponse.results?.firstOrNull()
                     it.copy(

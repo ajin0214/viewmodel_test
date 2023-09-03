@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-
 data class TmdbResponse(
     val page: Int?,
     val results: List<TmdbMovie>?,
