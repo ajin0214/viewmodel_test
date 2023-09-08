@@ -1,6 +1,8 @@
 package com.example.myapplication
 
-import android.content.Intent
+import Constants
+import android.os.Bundle
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.ItemBoxOfficeBinding
 import com.bumptech.glide.Glide
@@ -11,24 +13,32 @@ class BoxOfficeViewHolder(private val itemBoxOfficeBinding: ItemBoxOfficeBinding
         with(itemBoxOfficeBinding) {
             textRank.text = dailyBoxOfficeResult.rank
             textMovieTitle.text = dailyBoxOfficeResult.movieNm
-            textOpenDate.text = "영화 개봉 : ${dailyBoxOfficeResult.openDt}"///여기보면 string이랑 변수랑 같이 ""안에 넣는게 메모리많이 먹는대서 다음pr때 다른방식으로 수정해놓겟음.밑에애들까지쭉다전부
-            textAudienceCount.text = "누적 관람객 : ${dailyBoxOfficeResult.audiCnt}"
+            textOpenDate.text = itemView.context.getString(R.string.movie_release_date, dailyBoxOfficeResult.openDt)
+            textAudienceCount.text = itemView.context.getString(R.string.movie_audience_count, dailyBoxOfficeResult.audiAcc)
 
-            if (dailyBoxOfficeResult.audiCnt == dailyBoxOfficeResult.audiInten) {
-                textAudienceIntensity.text = "new!"
+            if (dailyBoxOfficeResult.audiAcc == dailyBoxOfficeResult.audiCnt) {
+                textAudienceIntensity.text = itemView.context.getString(R.string.movie_new)
             } else {
-                textAudienceIntensity.text = "관람객 증감 : ${dailyBoxOfficeResult.audiInten}"//변수입력이 조금 잘못된것같아서 이건 다음pr때 수정해놓겟음
+                textAudienceIntensity.text = itemView.context.getString(R.string.movie_audience_intensity)
             }
+            /////ifelse 로직은 뷰모델에서 정의하고 여기서는 데이터만 넣는식으로
 
-            val imageUrl = dailyBoxOfficeResult.posterPath?.let { "https://image.tmdb.org/t/p/w500$it" }
-            Glide.with(itemView.context)
+            val imageUrl = dailyBoxOfficeResult.posterPath?.let { Constants.TMDB_POSTER_IMAGE_URL + it }///url주소도 다른곳에 넣어두고 필요할때마다 꺼내쓰기//디미터법칙
+            ///이것도 뷰모델로 보내버려이잇
+            Glide.with(itemView.context)///글라이드는 뷰익스텐션에 이미지뷰
                 .load(imageUrl)
                 .into(imagePoster)
-
+            ///데이터를 채우는 함수들
             itemView.setOnClickListener {
-                val intent = Intent(itemView.context, DetailActivity::class.java)
-                intent.putExtra("movieDetail", dailyBoxOfficeResult)
-                itemView.context.startActivity(intent)
+                /*콘텍스트도 뷰모델에서 어떻게 가져오지?*///안드로이드뷰모델?콘텍스트를 뷰모델에서 제공해주는 뷰모델orDI라이브러리, 전역util함수
+                val bundle = Bundle()
+                val movieDetail = dailyBoxOfficeResult
+                bundle.putParcelable("movieDetail", movieDetail)
+                it.findNavController().navigate(R.id.action_mainFragment_to_detailFragment, bundle)
+                ////여기 비지니스로직도 ui단에는 없도록//뷰컨트롤러 거쳐서 뷰모델로 보내기
+                 // currentItem은 현재 항목의 데이터입니다.
+                /////listener 관련함수들
+                ///기능이 다르니까 함수를 분리해서 따로 넣어주자.
             }
         }
     }

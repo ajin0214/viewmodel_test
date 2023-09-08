@@ -1,3 +1,7 @@
 <resources>
-	<string name="app_name">My Application</string>
+    <string name="app_name">My Application</string>
+    <string name="movie_release_date">영화 개봉 : %s</string>
+    <string name="movie_audience_count">누적 관람객 : %s</string>
+    <string name="movie_new">new!</string>
+    <string name="movie_audience_intensity">관람객 증감 : %s</string>
 </resources>
