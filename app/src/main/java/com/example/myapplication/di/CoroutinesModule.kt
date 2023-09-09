@@ -15,9 +15,6 @@ package com.example.myapplication.di
  * limitations under the License.
  */
 
-
-import com.google.android.datatransport.runtime.dagger.Module
-import com.google.android.datatransport.runtime.dagger.Provides
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

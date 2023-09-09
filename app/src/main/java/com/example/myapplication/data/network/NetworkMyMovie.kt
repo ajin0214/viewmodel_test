@@ -22,7 +22,7 @@ fun NetworkMyMovie.toLocal() = LocalMyMovie(
     isWatched = (status == NetworkMyMovie.MyMovieStatus.COMPLETE),
 )
 
-fun List<NetworkMyMovie>.toLocal() = map { NetworkMyMovie::toLocal }
+fun List<NetworkMyMovie>.toLocal() = map { it.toLocal() }
 
 fun LocalMyMovie.toNetwork() = NetworkMyMovie(
     id = id,
@@ -35,4 +35,4 @@ fun LocalMyMovie.toNetwork() = NetworkMyMovie(
     }
 )
 
-fun List<LocalMyMovie>.toNetwork() = map { LocalMyMovie::toNetwork }
+fun List<LocalMyMovie>.toNetwork() = map { it.toNetwork() }
