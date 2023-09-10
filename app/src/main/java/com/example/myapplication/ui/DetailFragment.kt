@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.myapplication.databinding.FragmentDetailBinding
 import com.bumptech.glide.Glide
+import com.example.myapplication.DailyBoxOfficeResult
+import com.example.myapplication.R
 
 class DetailFragment : Fragment() {
 

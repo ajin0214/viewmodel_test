@@ -1,13 +1,15 @@
-package com.example.myapplication
+package com.example.myapplication.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.myapplication.MainViewController
 import com.example.myapplication.databinding.FragmentMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainFragment : Fragment() {
 
     private var _fragmentMainBinding: FragmentMainBinding? = null
