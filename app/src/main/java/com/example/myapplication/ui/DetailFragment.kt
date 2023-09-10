@@ -5,13 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.databinding.FragmentDetailBinding
 import com.bumptech.glide.Glide
 import com.example.myapplication.DailyBoxOfficeResult
 import com.example.myapplication.R
+import com.example.myapplication.data.DefaultMyMovieRepository
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
 
+    @Inject
+    lateinit var dmmRepository: DefaultMyMovieRepository
     private var _fragmentDetailBinding: FragmentDetailBinding? = null
     private val fragmentDetailBinding get() = _fragmentDetailBinding!!
 
@@ -40,8 +48,19 @@ class DetailFragment : Fragment() {
             .into(fragmentDetailBinding.poster)
 
         fragmentDetailBinding.title.text = movieDetail?.movieNm
-        fragmentDetailBinding.rating.rating = movieDetail?.voteAverage?.toFloat() ?: 0f
+        fragmentDetailBinding.rating.text = movieDetail?.voteAverage.toString()
         fragmentDetailBinding.overview.text = movieDetail?.overview
+
+        val descriptionEditText = fragmentDetailBinding.etDescription
+        val saveButton = fragmentDetailBinding.btnSave
+
+        saveButton.setOnClickListener {
+            val titleText = fragmentDetailBinding.title.text.toString()
+            val descriptionText = descriptionEditText.text.toString()
+            lifecycleScope.launch {
+                val result = dmmRepository.create(titleText, descriptionText)
+            }
+        }
     }
 
     override fun onDestroyView() {

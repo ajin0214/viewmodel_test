@@ -8,9 +8,15 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.ItemBoxOfficeBinding
 import com.bumptech.glide.Glide
+import com.example.myapplication.navigator.AppNavigator
+import com.example.myapplication.navigator.Screens
+import javax.inject.Inject
 
 class BoxOfficeViewHolder(private val itemBoxOfficeBinding: ItemBoxOfficeBinding) :
     RecyclerView.ViewHolder(itemBoxOfficeBinding.root) {
+
+    @Inject
+    lateinit var navigator: AppNavigator
     fun bind(dailyBoxOfficeResult: DailyBoxOfficeResult) {
         setViewHolderData(dailyBoxOfficeResult)
         setOnClickListener(dailyBoxOfficeResult)
@@ -47,14 +53,7 @@ class BoxOfficeViewHolder(private val itemBoxOfficeBinding: ItemBoxOfficeBinding
 
     private fun setOnClickListener(dailyBoxOfficeResult: DailyBoxOfficeResult) {
         itemView.setOnClickListener {
-            it.findNavController().navigate(
-                R.id.action_mainFragment_to_detailFragment,
-                Bundle().apply {
-                    putParcelable("movieDetail", dailyBoxOfficeResult)//이건 뷰컨트롤러+뷰모델
-                }
-            )
+            navigator.navigateTo(Screens.DETAIL)
         }
     }
 }
-
-

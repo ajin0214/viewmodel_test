@@ -1,6 +1,5 @@
 package com.example.myapplication.data
 
-import com.example.myapplication.MyMovie
 import com.example.myapplication.data.local.MyMovieDao
 import com.example.myapplication.data.local.toExternal
 import com.example.myapplication.data.local.toLocal
@@ -37,7 +36,7 @@ class DefaultMyMovieRepository @Inject constructor(
         }
         val myMovie = MyMovie(
             title = title,
-            descripton = description,
+            description = description,
             id = myMovieId
         )
         localDataSource.upsert(myMovie.toLocal())
@@ -45,9 +44,7 @@ class DefaultMyMovieRepository @Inject constructor(
         return myMovieId
     }
 
-    private fun createMyMovieId(): String {
-        return UUID.randomUUID().toString()
-    }
+
 
     suspend fun complete(myMovieId: String) {
         localDataSource.updateWatched(myMovieId, true)
@@ -71,5 +68,9 @@ class DefaultMyMovieRepository @Inject constructor(
             }
             networkDataSource.saveMyMovies(networkMyMovies)
         }
+    }
+
+    private fun createMyMovieId(): String {
+        return UUID.randomUUID().toString()
     }
 }

@@ -20,10 +20,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
             navigator.navigateTo(Screens.MAIN)
         }
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
 

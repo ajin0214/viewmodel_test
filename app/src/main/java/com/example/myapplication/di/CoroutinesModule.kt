@@ -57,3 +57,4 @@ object CoroutinesModule {
         @DefaultDispatcher dispatcher: CoroutineDispatcher
     ): CoroutineScope = CoroutineScope(SupervisorJob() + dispatcher)
 }
+

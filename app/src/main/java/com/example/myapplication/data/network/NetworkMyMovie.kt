@@ -14,25 +14,3 @@ data class NetworkMyMovie(
         COMPLETE
     }
 }
-
-fun NetworkMyMovie.toLocal() = LocalMyMovie(
-    id = id,
-    title = title,
-    description = shortDescription,
-    isWatched = (status == NetworkMyMovie.MyMovieStatus.COMPLETE),
-)
-
-fun List<NetworkMyMovie>.toLocal() = map { it.toLocal() }
-
-fun LocalMyMovie.toNetwork() = NetworkMyMovie(
-    id = id,
-    title = title,
-    shortDescription = description,
-    status = if (isWatched) {
-        NetworkMyMovie.MyMovieStatus.COMPLETE
-    } else {
-        NetworkMyMovie.MyMovieStatus.ACTIVE
-    }
-)
-
-fun List<LocalMyMovie>.toNetwork() = map { it.toNetwork() }
