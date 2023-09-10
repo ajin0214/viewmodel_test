@@ -1,4 +1,4 @@
 package com.example.myapplication.ui
 
-class MyMoviesFragment {
+class MyMoviesFragment : fragment() {
 }

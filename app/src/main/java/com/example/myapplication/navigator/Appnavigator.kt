@@ -3,7 +3,8 @@ package com.example.myapplication.navigator
 
 enum class Screens{
     MAIN,
-    DETAIL
+    DETAIL,
+    MYMOVIES
 }
 
 interface AppNavigator {
