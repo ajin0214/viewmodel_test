@@ -1,7 +1,5 @@
 package com.example.myapplication.data.network
 
-import com.example.myapplication.data.local.LocalMyMovie
-
 data class NetworkMyMovie(
     val id: String,
     val title: String,

@@ -1,10 +1,8 @@
 package com.example.myapplication
 
 import Constants
-import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.ItemBoxOfficeBinding
 import com.bumptech.glide.Glide
@@ -19,7 +17,7 @@ class BoxOfficeViewHolder(private val itemBoxOfficeBinding: ItemBoxOfficeBinding
     lateinit var navigator: AppNavigator
     fun bind(dailyBoxOfficeResult: DailyBoxOfficeResult) {
         setViewHolderData(dailyBoxOfficeResult)
-        setOnClickListener(dailyBoxOfficeResult)
+        setOnClickListener()
     }
 
     private fun setTextViewText(textView: TextView, text: String?) {
@@ -51,7 +49,7 @@ class BoxOfficeViewHolder(private val itemBoxOfficeBinding: ItemBoxOfficeBinding
         }
     }
 
-    private fun setOnClickListener(dailyBoxOfficeResult: DailyBoxOfficeResult) {
+    private fun setOnClickListener() {
         itemView.setOnClickListener {
             navigator.navigateTo(Screens.DETAIL)
         }

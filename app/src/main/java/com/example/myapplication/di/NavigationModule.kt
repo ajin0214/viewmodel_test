@@ -8,8 +8,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 
 
-@InstallIn(ActivityComponent::class)
 @Module
+@InstallIn(ActivityComponent::class)
 abstract class NavigationModule {
 
     @Binds

@@ -1,8 +1,6 @@
 package com.example.myapplication.data.local
 
 import androidx.room.Database
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import androidx.room.RoomDatabase
 
 

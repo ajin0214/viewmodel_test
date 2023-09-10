@@ -3,9 +3,8 @@ package com.example.myapplication.data
 import com.example.myapplication.data.local.MyMovieDao
 import com.example.myapplication.data.local.toExternal
 import com.example.myapplication.data.local.toLocal
+import com.example.myapplication.data.local.toNetwork
 import com.example.myapplication.data.network.MyMovieNetworkDataSource
-import com.example.myapplication.data.network.toLocal
-import com.example.myapplication.data.network.toNetwork
 import com.example.myapplication.di.ApplicationScope
 import com.example.myapplication.di.DefaultDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,7 +16,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class DefaultMyMovieRepository @Inject constructor(
     private val localDataSource: MyMovieDao,
     private val networkDataSource: MyMovieNetworkDataSource,

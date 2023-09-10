@@ -13,10 +13,10 @@ import com.example.myapplication.data.DefaultMyMovieRepository
 import com.example.myapplication.data.MyMovie
 import com.example.myapplication.databinding.FragmentMyMoviesBinding
 import com.example.myapplication.databinding.ItemMyMovieBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-
+@AndroidEntryPoint
 class MyMoviesFragment : Fragment() {
 
     @Inject

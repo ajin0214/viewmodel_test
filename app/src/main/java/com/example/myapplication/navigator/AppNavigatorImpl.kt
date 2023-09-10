@@ -7,7 +7,9 @@ import com.example.myapplication.ui.MainFragment
 import com.example.myapplication.ui.MyMoviesFragment
 import javax.inject.Inject
 
-class AppNavigatorImpl @Inject constructor(private val activity: FragmentActivity) : AppNavigator {
+class AppNavigatorImpl @Inject constructor(
+    private val activity: FragmentActivity
+) : AppNavigator {
 
     override fun navigateTo(screen: Screens) {
         val fragment = when (screen) {
