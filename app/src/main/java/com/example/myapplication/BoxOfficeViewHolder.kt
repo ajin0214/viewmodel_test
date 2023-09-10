@@ -4,7 +4,8 @@ import Constants
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.findNavController
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.ItemBoxOfficeBinding
 import com.bumptech.glide.Glide
@@ -19,9 +20,11 @@ class BoxOfficeViewHolder(private val itemBoxOfficeBinding: ItemBoxOfficeBinding
     private fun setTextViewText(textView: TextView, text: String?) {
         textView.text = text
     }
+
     private fun getPosterUrl(dailyBoxOfficeResult: DailyBoxOfficeResult): String {
         return dailyBoxOfficeResult.posterPath?.let { Constants.TMDB_POSTER_IMAGE_URL + it }.toString()
     }
+
     private fun loadImage(imageView: ImageView, imageUrl: String?) {
         Glide.with(imageView.context).load(imageUrl).into(imageView)
     }
@@ -47,12 +50,16 @@ class BoxOfficeViewHolder(private val itemBoxOfficeBinding: ItemBoxOfficeBinding
 
     private fun setOnClickListener(dailyBoxOfficeResult: DailyBoxOfficeResult) {
         itemView.setOnClickListener {
-            it.findNavController().navigate(
-                R.id.action_mainFragment_to_detailFragment,
-                Bundle().apply {
-                    putParcelable("movieDetail", dailyBoxOfficeResult)//이건 뷰컨트롤러+뷰모델
-                }
-            )
+            val activity = it.context as? AppCompatActivity
+            activity?.supportFragmentManager?.commit {
+                setReorderingAllowed(true)
+                replace(R.id.fragment_container, DetailFragment().apply {
+                    arguments = Bundle().apply {
+                        putParcelable("movieDetail", dailyBoxOfficeResult)
+                    }
+                })
+                addToBackStack(null)
+            }
         }
     }
 }

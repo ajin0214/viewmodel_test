@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.myapplication.databinding.FragmentMainBinding
 
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(R.layout.fragment_main) {
 
     private var _fragmentMainBinding: FragmentMainBinding? = null
     private val fragmentMainBinding get() = _fragmentMainBinding!!
