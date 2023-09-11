@@ -18,27 +18,32 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, mainFragment, "MainFragment")
                 .add(R.id.fragment_container, myMoviesFragment, "MyMoviesFragment")
-                .hide(myMoviesFragment) // 초기에 MyMoviesFragment는 숨깁니다.
+                .hide(myMoviesFragment)
                 .commit()
         }
-// MyMoviesFragment로 이동하는 버튼
+
         val btnMyMovies: Button = findViewById(R.id.btn_my_movies)
+
         btnMyMovies.setOnClickListener {
-            supportFragmentManager.popBackStackImmediate() // 백스택에서 DetailFragment 제거 (있을 경우)
-            supportFragmentManager.beginTransaction()
-                .hide(mainFragment)
-                .show(myMoviesFragment)
-                .commit()
+            supportFragmentManager.popBackStackImmediate()
+            switchToMyMoviesFragment()
         }
 
 // MainFragment로 이동하는 버튼
         val btnMain: Button = findViewById(R.id.btn_main)
         btnMain.setOnClickListener {
-            supportFragmentManager.popBackStackImmediate() // 백스택에서 DetailFragment 제거 (있을 경우)
+            supportFragmentManager.popBackStackImmediate()
             supportFragmentManager.beginTransaction()
                 .hide(myMoviesFragment)
                 .show(mainFragment)
                 .commit()
         }
+    }
+
+    fun switchToMyMoviesFragment() {
+        supportFragmentManager.beginTransaction()
+            .hide(mainFragment)
+            .show(myMoviesFragment)
+            .commit()
     }
 }

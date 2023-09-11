@@ -1,28 +1,43 @@
 package com.example.myapplication
 
+
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.viewModels
+import com.example.myapplication.databinding.FragmentMyMoviesBinding
 
 class MyMoviesFragment : Fragment(R.layout.fragment_my_movies) {
 
-    private lateinit var myMoviesAdapter: MyMoviesAdapter
+    private val myMoviesAdapter: MyMoviesAdapter by lazy { MyMoviesAdapter() }
+    private var _fragmentMyMoviesBinding: FragmentMyMoviesBinding? = null
+    private val fragmentMyMoviesBinding get() = _fragmentMyMoviesBinding!!
+
+    // ViewModel 초기화
+    private val viewModel: MyMoviesViewModel by viewModels {
+        MyMovieViewModelFactory((activity?.application as MyApplication).repository)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _fragmentMyMoviesBinding = FragmentMyMoviesBinding.inflate(inflater, container, false)
+        return fragmentMyMoviesBinding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fragmentMyMoviesBinding.rvMyMoviesList.adapter = myMoviesAdapter
+        viewModel.allMyMovies.observe(viewLifecycleOwner) { myMovie ->
+            myMoviesAdapter.submitList(myMovie)
+        }
+    }
 
-        val myMovies = listOf(
-            MyMovie("응애 1", "어흑 1"),
-            MyMovie("끼얏 2", "호우 2"),
-            MyMovie("몽 2", "파 2"),
-            MyMovie("냥 2", "이 2"),
-            MyMovie("탱 2", "어 2")
-        )
-
-        myMoviesAdapter = MyMoviesAdapter(myMovies)
-
-        val recyclerView: RecyclerView = view.findViewById(R.id.rv_my_movies_list)
-        recyclerView.adapter = myMoviesAdapter
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _fragmentMyMoviesBinding = null
     }
 }

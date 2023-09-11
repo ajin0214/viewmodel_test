@@ -1,32 +1,33 @@
 package com.example.myapplication
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import com.example.myapplication.data.MyMovie
+import com.example.myapplication.databinding.ItemMyMovieBinding
 
-data class MyMovie(val title: String, val description: String)
-class MyMoviesAdapter(private val myMovies: List<MyMovie>) : RecyclerView.Adapter<MyMoviesAdapter.MyMovieViewHolder>() {
+class MyMoviesAdapter :
+    ListAdapter<MyMovie, MyMoviesViewHolder>(MyMoviesComparator) {
 
-    inner class MyMovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val titleTextView: TextView = itemView.findViewById(R.id.tv_movie_title)
-        private val descriptionTextView: TextView = itemView.findViewById(R.id.tv_movie_description)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyMoviesViewHolder {
+        val binding = ItemMyMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MyMoviesViewHolder(binding)
+    }
 
-        fun bind(myMovie: MyMovie) {
-            titleTextView.text = myMovie.title
-            descriptionTextView.text = myMovie.description
+    override fun onBindViewHolder(holder: MyMoviesViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
+
+    companion object {
+        val MyMoviesComparator = object : DiffUtil.ItemCallback<MyMovie>() {
+            override fun areItemsTheSame(oldItem: MyMovie, newItem: MyMovie): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: MyMovie, newItem: MyMovie): Boolean {
+                return oldItem == newItem
+            }
         }
     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyMovieViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_my_movie, parent, false)
-        return MyMovieViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: MyMovieViewHolder, position: Int) {
-        holder.bind(myMovies[position])
-    }
-
-    override fun getItemCount() = myMovies.size
 }
