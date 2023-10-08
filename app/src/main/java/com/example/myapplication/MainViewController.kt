@@ -3,10 +3,10 @@ package com.example.myapplication
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
-import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.databinding.FragmentMainBinding
 
 class MainViewController(
-    private val activityMainBinding: ActivityMainBinding,
+    private val fragmentMainBinding: FragmentMainBinding,
     viewModelStoreOwner: ViewModelStoreOwner,
     private val viewLifecycleObserver: LifecycleOwner
 ) {
@@ -19,7 +19,7 @@ class MainViewController(
     }
 
     private fun initView() {
-        activityMainBinding.rvDailyBoxOfficeList.adapter = adapter
+        fragmentMainBinding.rvDailyBoxOfficeList.adapter = adapter
     }
 
     private fun initObservers() {
