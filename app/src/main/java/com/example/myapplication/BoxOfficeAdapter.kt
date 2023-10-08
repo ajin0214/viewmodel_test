@@ -4,18 +4,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.example.myapplication.data.movie.Movie
 import com.example.myapplication.databinding.ItemBoxOfficeBinding
 
 class BoxOfficeAdapter :
-    ListAdapter<DailyBoxOfficeResult, BoxOfficeViewHolder>(DailyBoxOfficeDiffCallback) {
+    ListAdapter<Movie, BoxOfficeViewHolder>(DailyBoxOfficeDiffCallback) {
 
     companion object {
-        val DailyBoxOfficeDiffCallback = object : DiffUtil.ItemCallback<DailyBoxOfficeResult>() {
-            override fun areItemsTheSame(oldItem: DailyBoxOfficeResult, newItem: DailyBoxOfficeResult): Boolean {
-                return oldItem.movieCd == newItem.movieCd
+        private val DailyBoxOfficeDiffCallback = object : DiffUtil.ItemCallback<Movie>() {
+            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+                return oldItem.movieId == newItem.movieId
             }
 
-            override fun areContentsTheSame(oldItem: DailyBoxOfficeResult, newItem: DailyBoxOfficeResult): Boolean {
+            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
                 return oldItem == newItem
             }
         }

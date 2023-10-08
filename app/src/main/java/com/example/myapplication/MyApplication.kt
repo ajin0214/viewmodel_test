@@ -1,14 +1,12 @@
 package com.example.myapplication
 
 import android.app.Application
-import com.example.myapplication.data.MyMovieLocalDatabase
-import com.example.myapplication.data.MyMovieRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
+import com.example.myapplication.util.ApplicationContextProvider
 
 class MyApplication : Application() {
-    val applicationScope = CoroutineScope(SupervisorJob())
+    override fun onCreate() {
+        super.onCreate()
 
-    val database by lazy { MyMovieLocalDatabase.getDatabase(this, applicationScope) }
-    val repository by lazy { MyMovieRepository(database.myMovieDao()) }
+        ApplicationContextProvider.init(application = this)
+    }
 }

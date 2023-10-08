@@ -8,12 +8,12 @@ import com.example.myapplication.databinding.FragmentMainBinding
 class MainViewController(
     private val fragmentMainBinding: FragmentMainBinding,
     viewModelStoreOwner: ViewModelStoreOwner,
-    private val viewLifecycleObserver: LifecycleOwner
+    private val viewLifecycleOwner: LifecycleOwner
 ) {
     private val mainViewModel: MainViewModel by lazy { ViewModelProvider(viewModelStoreOwner)[MainViewModel::class.java] }
     private val adapter: BoxOfficeAdapter by lazy { BoxOfficeAdapter() }
 
-    fun init() {
+    init {
         initView()
         initObservers()
     }
@@ -23,7 +23,7 @@ class MainViewController(
     }
 
     private fun initObservers() {
-        mainViewModel.dailyBoxOfficeList.observe(viewLifecycleObserver) { dailyBoxOfficeList ->
+        mainViewModel.dailyBoxOfficeList.observe(viewLifecycleOwner) { dailyBoxOfficeList ->
             adapter.submitList(dailyBoxOfficeList)
         }
     }

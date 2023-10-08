@@ -1,19 +1,17 @@
 package com.example.myapplication.util
 
-import android.content.Context
 import android.app.Application
+import android.content.Context
 
-class ApplicationContextProvider {
-    companion object {
-        private var applicationInstance: Application? = null
+object ApplicationContextProvider {
+    private var applicationInstance: Application? = null
 
-        fun init(application: Application) {
-            applicationInstance = application
-        }
+    fun init(application: Application) {
+        applicationInstance = application
+    }
 
-        fun getContext(): Context {
-            return applicationInstance?.applicationContext
-                ?: throw IllegalStateException("Application instance has not been initialized.")
-        }
+    fun getContext(): Context {
+        return applicationInstance?.applicationContext
+            ?: throw IllegalStateException("Application instance has not been initialized.")
     }
 }

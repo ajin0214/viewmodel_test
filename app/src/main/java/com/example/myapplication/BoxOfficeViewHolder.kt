@@ -1,61 +1,40 @@
 package com.example.myapplication
 
-import Constants
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.data.movie.Movie
 import com.example.myapplication.databinding.ItemBoxOfficeBinding
-import com.bumptech.glide.Glide
+import com.example.myapplication.util.Constants.MOVIE_ID
+import com.example.myapplication.util.ResourceUtils.getString
 
 class BoxOfficeViewHolder(private val itemBoxOfficeBinding: ItemBoxOfficeBinding) :
     RecyclerView.ViewHolder(itemBoxOfficeBinding.root) {
-    fun bind(dailyBoxOfficeResult: DailyBoxOfficeResult) {
-        setViewHolderData(dailyBoxOfficeResult)
-        setOnClickListener(dailyBoxOfficeResult)
+    fun bind(movie: Movie) {
+        setViewHolderData(movie = movie)
+        setOnClickListener(movie = movie)
     }
 
-    private fun setTextViewText(textView: TextView, text: String?) {
-        textView.text = text
-    }
-
-    private fun getPosterUrl(dailyBoxOfficeResult: DailyBoxOfficeResult): String {
-        return dailyBoxOfficeResult.posterPath?.let { Constants.TMDB_POSTER_IMAGE_URL + it }.toString()
-    }
-
-    private fun loadImage(imageView: ImageView, imageUrl: String?) {
-        Glide.with(imageView.context).load(imageUrl).into(imageView)
-    }
-
-    private fun setViewHolderData(dailyBoxOfficeResult: DailyBoxOfficeResult) {
+    private fun setViewHolderData(movie: Movie) {
         with(itemBoxOfficeBinding) {
-            setTextViewText(textRank, dailyBoxOfficeResult.rank)
-            setTextViewText(textMovieTitle, dailyBoxOfficeResult.movieNm)
-            setTextViewText(textOpenDate, itemView.context.getString(R.string.movie_release_date, dailyBoxOfficeResult.openDt))
-            setTextViewText(textAudienceCount, itemView.context.getString(R.string.movie_audience_count, dailyBoxOfficeResult.audiAcc))
-            setTextViewText(textAudienceIntensity, getAudienceIntensity(dailyBoxOfficeResult))
-            loadImage(imagePoster, getPosterUrl(dailyBoxOfficeResult))
+            textRank.text = movie.rank
+            textMovieTitle.text = movie.movieNm
+            textOpenDate.text = getString(R.string.movie_release_date, movie.openDt ?: "")
+            textAudienceCount.text = getString(R.string.movie_audience_count, movie.audiAcc ?: "")
+            textAudienceIntensity.text = movie.audiInten
+            imagePoster.loadImage(movie.getPosterUrl())
         }
     }
 
-    private fun getAudienceIntensity(dailyBoxOfficeResult: DailyBoxOfficeResult): String {
-        return if (dailyBoxOfficeResult.audiAcc == dailyBoxOfficeResult.audiCnt) {
-            itemView.context.getString(R.string.movie_new)
-        } else {
-            itemView.context.getString(R.string.movie_audience_intensity, dailyBoxOfficeResult.audiInten)
-        }
-    }
-
-    private fun setOnClickListener(dailyBoxOfficeResult: DailyBoxOfficeResult) {
+    private fun setOnClickListener(movie: Movie) {
         itemView.setOnClickListener {
             val activity = it.context as? AppCompatActivity
             activity?.supportFragmentManager?.commit {
                 setReorderingAllowed(true)
                 replace(R.id.fragment_container, DetailFragment().apply {
                     arguments = Bundle().apply {
-                        putParcelable("movieDetail", dailyBoxOfficeResult)
+                        putString(MOVIE_ID, movie.movieId)
                     }
                 })
                 addToBackStack(null)

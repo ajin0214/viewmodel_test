@@ -4,48 +4,29 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.launch
-import java.util.Date
+import com.example.myapplication.data.movie.Movie
+import com.example.myapplication.data.movie.MovieRepository
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
+import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
-    private val kobisRepository: KobisRepository by lazy { KobisRepository() }
-    private val tmdbRepository: TmdbRepository by lazy { TmdbRepository() }
+class MainViewModel(
+    private val movieRepository: MovieRepository
+) : ViewModel() {
 
-    private val _dailyBoxOfficeList = MutableLiveData<List<DailyBoxOfficeResult>>()
-    val dailyBoxOfficeList: LiveData<List<DailyBoxOfficeResult>> = _dailyBoxOfficeList
+    private val _dailyBoxOfficeList = MutableLiveData<List<Movie>>()
+    val dailyBoxOfficeList: LiveData<List<Movie>> = _dailyBoxOfficeList
 
     init {
-        requestSearchDailyBoxOfficeList()
+        getDailyBoxOfficeList()
     }
 
-    private fun requestSearchDailyBoxOfficeList() {
-        val targetDate = getTargetDate()
-
+    private fun getDailyBoxOfficeList() {
         viewModelScope.launch {
             try {
-                val dailyBoxOfficeListResult = kobisRepository.getDailyBoxOfficeList(targetDate = targetDate)
-                val dailyBoxOfficeList = dailyBoxOfficeListResult.getDailyBoxOfficeList() ?: emptyList()
-
-                val deferreds = dailyBoxOfficeList.map {
-                    async {
-                        val year = it.openDt.substring(0, 4)
-                        val tmdbResponse = tmdbRepository.searchMovie(it.movieNm, year)
-                        val firstResult = tmdbResponse.results?.firstOrNull()
-                        it.copy(
-                            posterPath = firstResult?.poster_path,
-                            voteAverage = firstResult?.vote_average,
-                            backdropPath = firstResult?.backdrop_path,
-                            overview = firstResult?.overview
-                        )
-                    }
-                }
-                val dailyBoxOfficeListWithPoster = deferreds.awaitAll()
-                _dailyBoxOfficeList.value = dailyBoxOfficeListWithPoster
-
+                val targetDate = getTargetDate()
+                _dailyBoxOfficeList.value = movieRepository.getDailyBoxOfficeList(targetDate = targetDate)
             } catch (e: Exception) {
                 // todo-만갑: 에러 처리
             }

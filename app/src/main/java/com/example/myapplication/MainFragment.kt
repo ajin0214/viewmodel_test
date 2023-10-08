@@ -6,33 +6,39 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.myapplication.databinding.FragmentMainBinding
+import com.example.myapplication.util.ViewModelProviderHelper
 
 
-class MainFragment : Fragment(R.layout.fragment_main) {
+class MainFragment : Fragment() {
 
-    private var _fragmentMainBinding: FragmentMainBinding? = null
-    private val fragmentMainBinding get() = _fragmentMainBinding!!
+    private var _binding: FragmentMainBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _fragmentMainBinding = FragmentMainBinding.inflate(inflater, container, false)
-        return fragmentMainBinding.root
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        ViewModelProviderHelper.createViewModel(
+            owner = this,
+            viewModel = MainViewModel(movieRepository = ServiceLocator.movieRepository)
+        )
+
         MainViewController(
-            fragmentMainBinding = fragmentMainBinding,
+            fragmentMainBinding = binding,
             viewModelStoreOwner = this,
-            viewLifecycleObserver = viewLifecycleOwner
-        ).init()
+            viewLifecycleOwner = viewLifecycleOwner
+        )
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _fragmentMainBinding = null
+        _binding = null
     }
 }
