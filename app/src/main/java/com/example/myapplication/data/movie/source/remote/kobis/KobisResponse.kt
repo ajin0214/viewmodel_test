@@ -1,7 +1,7 @@
-package com.example.myapplication
+package com.example.myapplication.data.movie.source.remote.kobis
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import com.example.myapplication.R
+import com.example.myapplication.util.ResourceUtils
 
 data class DailyBoxOfficeListResult(
     val boxOfficeResult: BoxOfficeResult?
@@ -17,7 +17,6 @@ data class BoxOfficeResult(
     val dailyBoxOfficeList: List<DailyBoxOfficeResult>?
 )
 
-@Parcelize
 data class DailyBoxOfficeResult(
     val rnum: String?,
     val rank: String?,
@@ -34,9 +33,14 @@ data class DailyBoxOfficeResult(
     val audiChange: String?,
     val audiAcc: String?,
     val scrnCnt: String?,
-    val showCnt: String?,
-    var posterPath: String? = null,
-    var voteAverage: Double? = null,
-    var backdropPath: String? = null,
-    var overview: String? = null
-) : Parcelable
+    val showCnt: String?
+) {
+    fun getAudienceIntensity(): String {
+        return if (audiAcc == audiCnt) {
+            ResourceUtils.getString(R.string.movie_new)
+        } else {
+            ResourceUtils.getString(R.string.movie_audience_intensity, audiInten ?: "")
+        }
+    }
+
+}

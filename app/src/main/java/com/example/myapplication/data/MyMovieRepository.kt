@@ -8,7 +8,13 @@ class MyMovieRepository(private val myMovieDao: MyMovieDao) {
     val allMyMovies: Flow<List<MyMovie>> = myMovieDao.observeAll()
 
     @WorkerThread
-    suspend fun insert(myMovie: MyMovie) {
-        myMovieDao.insert(myMovie)
+    suspend fun insert(movieId: String, title: String, description: String) {
+        myMovieDao.insert(
+            myMovie = MyMovie(
+                movieId = movieId,
+                title = title,
+                description = description
+            )
+        )
     }
 }

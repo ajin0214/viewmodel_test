@@ -1,17 +1,14 @@
-package com.example.myapplication
+package com.example.myapplication.data.movie.source.remote.kobis
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object KobisRetrofitInstance {
-    private val kobisRetrofit: Retrofit by lazy {
-        Retrofit.Builder()
+    fun createKobisApiService(): KobisApiService {
+        return Retrofit.Builder()
             .baseUrl("https://www.kobis.or.kr/kobisopenapi/webservice/rest/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-    }
-
-    fun createKobisApiService(): KobisApiService {
-        return kobisRetrofit.create(KobisApiService::class.java)
+            .create(KobisApiService::class.java)
     }
 }
